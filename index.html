@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Nigeria Unity — One Handshake at a Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --unity-green:#008753;
+    --hope-gold:#F4C430;
+    --trust-blue:#0B3C5D;
+    --sunrise-orange:#F28C28;
+    --charcoal:#333333;
+    --peace-white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--charcoal);
+    background:var(--peace-white);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Montserrat',sans-serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'Poppins',sans-serif;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    font-weight:600;
+    opacity:.85;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(11,60,93,0.92);
+    backdrop-filter:blur(6px);
+    transition:background .3s ease;
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{
+    font-family:'Montserrat',sans-serif;font-weight:800;
+    color:var(--peace-white);font-size:1.05rem;letter-spacing:.02em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .nav-logo img{height:36px;width:36px;object-fit:contain;}
+  .nav-logo span{color:var(--hope-gold);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{
+    color:rgba(255,255,255,.82);font-size:.9rem;font-weight:500;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--hope-gold);}
+  .nav-cta{
+    background:var(--sunrise-orange);color:var(--peace-white);
+    padding:9px 20px;border-radius:2px;font-weight:600;font-size:.85rem;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(242,140,40,.35);}
+  .nav-toggle{display:none;background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(244,196,48,.30), transparent 45%),
+      linear-gradient(160deg, rgba(11,60,93,.92) 0%, rgba(8,44,71,.90) 55%, rgba(6,31,51,.94) 100%),
+      url('assets/hero-handshake.jpg');
+    background-size:cover;
+    background-position:center 30%;
+    overflow:hidden;
+    padding-top:90px;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size:26px 26px;
+    opacity:.4;
+    animation: drift 40s linear infinite;
+  }
+  @keyframes drift{ from{background-position:0 0;} to{background-position:260px 130px;} }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;padding:60px 28px;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;
+  }
+  .hero-eyebrow{color:var(--hope-gold);margin-bottom:22px;}
+  .hero h1{
+    color:var(--peace-white);font-size:clamp(2.4rem,5vw,3.6rem);
+    font-weight:800;line-height:1.08;letter-spacing:-.01em;
+    margin-bottom:22px;
+    opacity:0;animation:riseIn .8s ease .1s forwards;
+  }
+  .hero h1 em{font-style:normal;color:var(--hope-gold);}
+  .hero p.lede{
+    color:rgba(255,255,255,.82);font-size:1.08rem;max-width:480px;margin-bottom:34px;
+    opacity:0;animation:riseIn .8s ease .3s forwards;
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:riseIn .8s ease .5s forwards;}
+  .btn-primary{
+    background:var(--unity-green);color:var(--peace-white);
+    padding:15px 30px;border-radius:2px;font-weight:600;font-size:.95rem;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,135,83,.4);}
+  .btn-ghost{
+    border:1.5px solid rgba(255,255,255,.4);color:var(--peace-white);
+    padding:14px 28px;border-radius:2px;font-weight:600;font-size:.95rem;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--hope-gold);background:rgba(244,196,48,.08);}
+
+  /* HERO COUNTDOWN CARD */
+  .countdown-card{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:4px;padding:32px 28px;
+    backdrop-filter:blur(4px);
+    opacity:0;animation:riseIn .9s ease .5s forwards;
+  }
+  .countdown-card .eyebrow{color:var(--sunrise-orange);margin-bottom:10px;}
+  .countdown-card h3{color:var(--peace-white);font-size:1.15rem;margin-bottom:20px;}
+  .countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+  .countdown-unit{text-align:center;}
+  .countdown-unit .num{
+    font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.9rem;
+    color:var(--hope-gold);line-height:1;
+  }
+  .countdown-unit .lbl{
+    font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;
+    color:rgba(255,255,255,.6);margin-top:6px;
+  }
+  .countdown-card .tagline{
+    color:rgba(255,255,255,.75);font-size:.85rem;border-top:1px solid rgba(255,255,255,.12);
+    padding-top:16px;
+  }
+
+  /* SECTION SHARED */
+  section{padding:110px 0;position:relative;}
+  .section-head{max-width:640px;margin-bottom:60px;}
+  .section-head .eyebrow{color:var(--unity-green);margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:700;color:var(--trust-blue);line-height:1.2;}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* MISSION */
+  .mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;}
+  .mission-card{
+    padding:36px 28px;border:1px solid #eee;border-radius:4px;
+    border-top:3px solid var(--unity-green);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .mission-card:nth-child(2){border-top-color:var(--hope-gold);}
+  .mission-card:nth-child(3){border-top-color:var(--sunrise-orange);}
+  .mission-card:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.06);}
+  .mission-card .num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;color:var(--hope-gold);letter-spacing:.06em;margin-bottom:16px;}
+  .mission-card h3{font-size:1.15rem;color:var(--trust-blue);margin-bottom:12px;}
+  .mission-card p{font-size:.92rem;color:#555;}
+
+  /* CAMPAIGN BAND */
+  .campaign-band{
+    background:var(--unity-green);color:var(--peace-white);
+    padding:70px 0;
+  }
+  .campaign-inner{
+    display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;
+  }
+  .campaign-inner h2{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:700;max-width:500px;}
+  .campaign-inner .eyebrow{color:var(--hope-gold);margin-bottom:10px;}
+  .campaign-inner p{opacity:.9;max-width:440px;margin-top:12px;font-size:.95rem;}
+
+  /* STORIES */
+  .stories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:70px;}
+  .story-card{
+    border-radius:4px;overflow:hidden;background:var(--peace-white);
+    border:1px solid #eee;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .story-card:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(0,0,0,.08);}
+  .story-thumb{
+    height:150px;display:flex;align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;font-weight:800;color:rgba(255,255,255,.9);font-size:2.4rem;
+  }
+  .story-card:nth-child(1) .story-thumb{background:linear-gradient(135deg,var(--trust-blue),#134a73);}
+  .story-card:nth-child(2) .story-thumb{background:linear-gradient(135deg,var(--unity-green),#02623b);}
+  .story-card:nth-child(3) .story-thumb{background:linear-gradient(135deg,var(--sunrise-orange),#c96a15);}
+  .story-card:nth-child(4) .story-thumb{background:linear-gradient(135deg,var(--hope-gold),#c99a12);}
+  .story-body{padding:18px 20px 22px;}
+  .story-tag{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sunrise-orange);margin-bottom:8px;}
+  .story-body h4{font-size:1rem;color:var(--trust-blue);margin-bottom:6px;}
+  .story-body p{font-size:.83rem;color:#666;}
+
+  /* MOSAIC — SIGNATURE ELEMENT */
+  .mosaic-wrap{
+    background:#fafaf8;border:1px solid #eee;border-radius:6px;padding:44px 40px;
+  }
+  .mosaic-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px;flex-wrap:wrap;}
+  .mosaic-head h3{color:var(--trust-blue);font-size:1.3rem;}
+  .mosaic-head p{font-size:.85rem;color:#666;max-width:360px;}
+  .mosaic-legend{display:flex;gap:18px;font-size:.75rem;color:#666;flex-wrap:wrap;}
+  .legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;}
+  .mosaic-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;
+  }
+  .state-tile{
+    aspect-ratio:1;border-radius:3px;background:#e8e6df;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.62rem;font-weight:600;color:#999;text-align:center;padding:4px;
+    position:relative;cursor:default;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .state-tile:hover{transform:scale(1.08);z-index:5;box-shadow:0 6px 16px rgba(0,0,0,.15);}
+  .state-tile.live{background:var(--unity-green);color:#fff;}
+  .state-tile.upcoming{background:#f0d98a44;color:var(--charcoal);border:1px dashed var(--hope-gold);}
+  .state-tile .tooltip{
+    position:absolute;bottom:110%;left:50%;transform:translateX(-50%);
+    background:var(--trust-blue);color:#fff;font-size:.68rem;padding:6px 10px;
+    border-radius:3px;white-space:nowrap;opacity:0;pointer-events:none;
+    transition:opacity .15s ease;
+  }
+  .state-tile:hover .tooltip{opacity:1;}
+
+  /* PROGRESS SECTION */
+  .progress{background:#fafaf8;}
+  .progress-inner{display:grid;grid-template-columns:.75fr 1.25fr;gap:56px;align-items:center;}
+  .progress-stat{
+    font-family:'Montserrat',sans-serif;font-weight:800;font-size:3.4rem;color:var(--unity-green);line-height:1;
+  }
+  .progress-stat span{font-size:1.4rem;color:var(--charcoal);opacity:.5;font-weight:600;}
+  .progress-bar-track{height:10px;background:#e8e6df;border-radius:6px;overflow:hidden;margin:20px 0 22px;}
+  .progress-bar-fill{height:100%;width:61%;background:linear-gradient(90deg,var(--unity-green),var(--hope-gold));border-radius:6px;}
+  .progress-copy p{color:#555;font-size:.92rem;margin-bottom:10px;}
+  .progress-img{border-radius:6px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.12);}
+  .progress-img img{width:100%;display:block;}
+
+  .goals-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px;}
+  .goal-chip{background:#fff;border:1px solid #eee;border-left:3px solid var(--hope-gold);border-radius:4px;padding:18px 20px;}
+  .goal-chip .num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.5rem;color:var(--trust-blue);}
+  .goal-chip .lbl{font-size:.78rem;color:#666;margin-top:4px;}
+
+  /* COMMUNITY GALLERY */
+  .community{background:var(--peace-white);}
+  .community-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;}
+  .community-grid img{border-radius:6px;width:100%;height:100%;object-fit:cover;box-shadow:0 20px 40px rgba(0,0,0,.1);}
+  .community-side{display:flex;flex-direction:column;gap:24px;}
+  .community-side img{aspect-ratio:1/1;}
+  .community-main{aspect-ratio:4/3.1;}
+
+  /* SHARE YOUR STORY */
+  .share-story{background:var(--trust-blue);color:#fff;}
+  .share-inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .share-story h2{color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px;}
+  .share-story p{color:rgba(255,255,255,.78);font-size:.95rem;margin-bottom:8px;max-width:440px;}
+  .share-form{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:32px;}
+  .share-form label{display:block;font-size:.8rem;color:rgba(255,255,255,.7);margin-bottom:6px;margin-top:16px;}
+  .share-form label:first-child{margin-top:0;}
+  .share-form input, .share-form textarea{
+    width:100%;padding:12px 14px;border-radius:3px;border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);color:#fff;font-family:'Poppins',sans-serif;font-size:.9rem;
+  }
+  .share-form input::placeholder, .share-form textarea::placeholder{color:rgba(255,255,255,.4);}
+  .share-form textarea{resize:vertical;min-height:90px;}
+  .share-form button{
+    margin-top:22px;width:100%;background:var(--hope-gold);color:var(--trust-blue);
+    border:none;padding:14px;border-radius:3px;font-weight:700;font-size:.95rem;cursor:pointer;
+    transition:transform .2s ease;
+  }
+  .share-form button:hover{transform:translateY(-2px);}
+  .share-note{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:12px;}
+
+  /* FOUNDER STRIP */
+  .founder{
+    background:var(--charcoal);color:var(--peace-white);padding:90px 0;
+  }
+  .founder-inner{display:grid;grid-template-columns:.9fr 1.4fr;gap:56px;align-items:center;}
+  .founder-photo{
+    aspect-ratio:4/5;border-radius:4px;overflow:hidden;
+    background:linear-gradient(155deg,var(--trust-blue),var(--unity-green));
+  }
+  .founder-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%;}
+  .founder-quote{font-size:1.4rem;line-height:1.5;font-weight:400;margin-bottom:26px;color:#f2f2f2;}
+  .founder-quote::before{content:'“';color:var(--hope-gold);font-family:'Montserrat',sans-serif;}
+  .founder-quote::after{content:'”';color:var(--hope-gold);font-family:'Montserrat',sans-serif;}
+  .founder-name{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--hope-gold);margin-bottom:4px;}
+  .founder-role{font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:22px;}
+  .legit-row{display:flex;gap:28px;flex-wrap:wrap;font-size:.82rem;color:rgba(255,255,255,.7);}
+  .legit-row strong{color:#fff;display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+
+  /* CTA FOOTER */
+  .cta-band{
+    background:linear-gradient(120deg, var(--sunrise-orange), var(--hope-gold));
+    padding:80px 0;text-align:center;color:var(--trust-blue);
+  }
+  .cta-band h2{font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:16px;}
+  .cta-band p{max-width:480px;margin:0 auto 32px;font-size:1rem;opacity:.85;}
+  .cta-band .btn-primary{background:var(--trust-blue);}
+  .hashtags{margin-top:26px;font-size:.85rem;font-weight:600;letter-spacing:.02em;color:var(--trust-blue);opacity:.8;}
+
+  footer{background:#08192a;color:rgba(255,255,255,.55);padding:50px 0 30px;font-size:.82rem;}
+  .footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:30px;}
+  .footer-logo{font-family:'Montserrat',sans-serif;font-weight:800;color:#fff;font-size:1rem;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .footer-logo img{height:32px;width:32px;object-fit:contain;}
+  .footer-slogan{max-width:320px;line-height:1.6;}
+  .footer-cols{display:flex;gap:60px;}
+  .footer-col h5{color:#fff;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+  .footer-col a{display:block;margin-bottom:9px;color:rgba(255,255,255,.55);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--hope-gold);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;text-align:center;opacity:.5;}
+
+  @media (max-width:880px){
+    .hero-inner{grid-template-columns:1fr;}
+    .mission-grid{grid-template-columns:1fr;}
+    .stories-grid{grid-template-columns:repeat(2,1fr);}
+    .campaign-inner{flex-direction:column;align-items:flex-start;}
+    .founder-inner{grid-template-columns:1fr;}
+    .founder-photo{max-width:220px;}
+    .progress-inner{grid-template-columns:1fr;}
+    .community-grid{grid-template-columns:1fr;}
+    .share-inner{grid-template-columns:1fr;}
+    .goals-row{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .footer-inner{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="assets/logo.png" alt="New Nigeria Unity logo">NEW NIGERIA <span>UNITY</span></div>
+    <ul class="nav-links">
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#campaign">Campaign</a></li>
+      <li><a href="#stories">Unity Stories</a></li>
+      <li><a href="#founder">About</a></li>
+    </ul>
+    <a href="#join" class="nav-cta">Join the Movement</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow hero-eyebrow">One Handshake at a Time · Launching Aug 1, 2026</div>
+      <h1>Together We Stand.<br>Together We Build <em>Peace.</em><br>Together We Rise.</h1>
+      <p class="lede">A non-partisan, citizen-led movement for peace and unity across every one of Nigeria's 36 states and the FCT — one story, one handshake, one community at a time.</p>
+      <div class="hero-ctas">
+        <a href="#join" class="btn-primary">Follow the Campaign →</a>
+        <a href="#stories" class="btn-ghost">Watch Unity Stories</a>
+      </div>
+    </div>
+    <div class="countdown-card">
+      <div class="eyebrow">Campaign Launch</div>
+      <h3>One Handshake at a Time</h3>
+      <div class="countdown-grid" id="countdown">
+        <div class="countdown-unit"><div class="num" id="cd-days">--</div><div class="lbl">Days</div></div>
+        <div class="countdown-unit"><div class="num" id="cd-hours">--</div><div class="lbl">Hours</div></div>
+        <div class="countdown-unit"><div class="num" id="cd-mins">--</div><div class="lbl">Mins</div></div>
+        <div class="countdown-unit"><div class="num" id="cd-secs">--</div><div class="lbl">Secs</div></div>
+      </div>
+      <div class="tagline">36 episodes. 36 states + FCT. One Nigeria.</div>
+    </div>
+  </div>
+</header>
+
+<section id="mission">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Why We Exist</div>
+      <h2>One Voice. One Nation. One Future.</h2>
+    </div>
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="num">01</div>
+        <h3>Bridge, not divide</h3>
+        <p>NNU is non-partisan and citizen-led — built to connect Nigerians across ethnic, religious, and regional lines, not to represent any one of them.</p>
+      </div>
+      <div class="mission-card reveal">
+        <div class="num">02</div>
+        <h3>Grassroots by design</h3>
+        <p>The movement operates across all 36 states and the FCT, powered by real stories from real communities — not top-down messaging.</p>
+      </div>
+      <div class="mission-card reveal">
+        <div class="num">03</div>
+        <h3>Peace in practice</h3>
+        <p>Every episode, post, and campaign shows unity already happening in Nigeria — proof, not persuasion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="campaign-band" id="campaign">
+  <div class="container campaign-inner reveal">
+    <div>
+      <div class="eyebrow">The Campaign</div>
+      <h2>One Handshake at a Time</h2>
+      <p>Launching August 1, 2026 on Facebook — a 36-episode series built around real stories of unity from every corner of Nigeria.</p>
+    </div>
+    <a href="#" class="btn-ghost" style="border-color:rgba(255,255,255,.5)">View Full Schedule →</a>
+  </div>
+</div>
+
+<section id="stories">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Unity Stories Across Nigeria</div>
+      <h2>36 episodes. Four cultures ready. Thirty-two to go.</h2>
+    </div>
+    <div class="stories-grid">
+      <div class="story-card reveal">
+        <div class="story-thumb">T</div>
+        <div class="story-body"><div class="story-tag">Episode Ready</div><h4>Tiv</h4><p>Benue State — stories of communal farming and shared harvest.</p></div>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-thumb">I</div>
+        <div class="story-body"><div class="story-tag">Episode Ready</div><h4>Igbo</h4><p>Southeast Nigeria — market trade and neighborly trust.</p></div>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-thumb">H</div>
+        <div class="story-body"><div class="story-tag">Episode Ready</div><h4>Hausa</h4><p>Northern Nigeria — durbar traditions and community hospitality.</p></div>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-thumb">Y</div>
+        <div class="story-body"><div class="story-tag">Episode Ready</div><h4>Yoruba</h4><p>Southwest Nigeria — festival culture and cross-faith friendship.</p></div>
+      </div>
+    </div>
+
+    <div class="mosaic-wrap reveal">
+      <div class="mosaic-head">
+        <div>
+          <h3>Every state has a story</h3>
+          <p>36 states plus the FCT — this map fills in as each episode goes into production.</p>
+        </div>
+        <div class="mosaic-legend">
+          <span><span class="legend-dot" style="background:var(--unity-green)"></span>Episode ready</span>
+          <span><span class="legend-dot" style="background:#e8e6df;border:1px solid #ccc"></span>Upcoming</span>
+        </div>
+      </div>
+      <div class="mosaic-grid" id="mosaic"></div>
+    </div>
+  </div>
+</section>
+
+<section class="progress">
+  <div class="container progress-inner">
+    <div class="reveal">
+      <div class="eyebrow" style="color:var(--sunrise-orange)">Campaign Progress</div>
+      <div class="progress-stat">22<span>/36 states reached</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+      <div class="progress-copy">
+        <p>Kano, Kaduna, Jigawa, Bauchi, Benue, Enugu, Anambra, Imo — and counting. Every week adds more hands, more states, one Nigeria.</p>
+      </div>
+      <div class="goals-row">
+        <div class="goal-chip"><div class="num">36 + FCT</div><div class="lbl">States in scope</div></div>
+        <div class="goal-chip"><div class="num">36</div><div class="lbl">Planned episodes</div></div>
+        <div class="goal-chip"><div class="num">Aug 1</div><div class="lbl">Campaign launch, 2026</div></div>
+      </div>
+    </div>
+    <div class="progress-img reveal">
+      <img src="assets/wrapup-montage.jpg" alt="New Nigeria Unity Week 2 and 3 wrap-up montage showing progress across Nigerian states">
+    </div>
+  </div>
+</section>
+
+<section class="community">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Unity in Action</div>
+      <h2>What "One Handshake at a Time" looks like</h2>
+    </div>
+    <div class="community-grid">
+      <div class="reveal"><img class="community-main" src="assets/community-handshake.jpg" alt="Community members from different faiths and regions greeting each other with Nigerian flags"></div>
+      <div class="community-side">
+        <img class="reveal" src="assets/community-garden.jpg" alt="A community garden project bringing neighbors together — Our Community Garden, Stronger Together">
+        <img class="reveal" src="assets/respect-post.jpg" alt="Ask Anything Respectfully — a New Nigeria Unity engagement post encouraging cross-cultural curiosity">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="founder" id="founder">
+  <div class="container founder-inner">
+    <div class="founder-photo reveal"><img src="assets/founder.jpg" alt="Marcus Ezekiel, Founder of New Nigeria Unity"></div>
+    <div class="reveal">
+      <p class="founder-quote">Peace isn't the absence of difference. It's what we choose to build across it — one handshake, one story, one community at a time.</p>
+      <div class="founder-name">Marcus Ezekiel</div>
+      <div class="founder-role">Founder, New Nigeria Unity — Abuja, Nigeria</div>
+      <div class="legit-row">
+        <div><strong>Status</strong>Registering as an NGO / Incorporated Trustee with the CAC</div>
+        <div><strong>Reach</strong>All 36 states + FCT</div>
+        <div><strong>Platform</strong>Facebook — @NewNigeriaUnity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="share-story" id="share-story">
+  <div class="container share-inner">
+    <div class="reveal">
+      <div class="eyebrow" style="color:var(--hope-gold)">Real Stories, Real Voices</div>
+      <h2>Every handshake starts with a story. Tell us yours.</h2>
+      <p>We're building this movement one real story at a time — not stock quotes. If unity showed up in your community this week, we want to hear it, and may feature it in an upcoming episode or post.</p>
+      <p>No submission required to follow along — just an open invitation.</p>
+    </div>
+    <form class="share-form reveal" onsubmit="event.preventDefault(); window.location.href='mailto:hello@newnigeriaunity.org?subject=' + encodeURIComponent('Unity Story from ' + (document.getElementById('story-name').value || 'a supporter')) + '&body=' + encodeURIComponent(document.getElementById('story-text').value + '\n\nLocation: ' + document.getElementById('story-location').value);">
+      <label for="story-name">Your name</label>
+      <input type="text" id="story-name" placeholder="e.g. Amina Yusuf" required>
+      <label for="story-location">Your state / city</label>
+      <input type="text" id="story-location" placeholder="e.g. Sokoto" required>
+      <label for="story-text">Your story</label>
+      <textarea id="story-text" placeholder="What moment of unity did you witness or take part in?" required></textarea>
+      <button type="submit">Send Your Story →</button>
+      <div class="share-note">Opens your email app to hello@newnigeriaunity.org — update this address to the movement's real inbox before launch.</div>
+    </form>
+  </div>
+</section>
+
+<div class="cta-band" id="join">
+  <div class="container reveal">
+    <h2>Be part of One Nigeria.</h2>
+    <p>Follow the campaign, share a story from your community, or reach out to get involved.</p>
+    <a href="#" class="btn-primary">Follow on Facebook →</a>
+    <div class="hashtags">#NewNigeriaUnity &nbsp;#TogetherWeStand &nbsp;#OneNigeria &nbsp;#PeaceFirst &nbsp;#HopeForNigeria</div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><img src="assets/logo.png" alt="New Nigeria Unity logo">NEW NIGERIA UNITY</div>
+        <div class="footer-slogan">Together We Stand. Together We Build Peace. Together We Rise.</div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Explore</h5>
+          <a href="#mission">Mission</a>
+          <a href="#campaign">Campaign</a>
+          <a href="#stories">Unity Stories</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect</h5>
+          <a href="#">Facebook</a>
+          <a href="#join">Join the Movement</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 New Nigeria Unity. A citizen-led peace movement.</div>
+  </div>
+</footer>
+
+<script>
+  // Countdown to Aug 1, 2026, 00:00 WAT (UTC+1)
+  const launchDate = new Date("2026-08-01T00:00:00+01:00").getTime();
+  function updateCountdown(){
+    const now = new Date().getTime();
+    const dist = launchDate - now;
+    if(dist < 0){
+      document.getElementById('countdown').innerHTML = '<div style="grid-column:1/-1;color:#F4C430;font-weight:600;">Campaign is live!</div>';
+      return;
+    }
+    const d = Math.floor(dist/(1000*60*60*24));
+    const h = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((dist%(1000*60*60))/(1000*60));
+    const s = Math.floor((dist%(1000*60))/1000);
+    document.getElementById('cd-days').textContent = d;
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // 36 states + FCT mosaic — four live to match completed episode packages
+  const states = ["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara","FCT"];
+  const live = ["Benue","Anambra","Kano","Oyo"];
+  const mosaic = document.getElementById('mosaic');
+  states.forEach(st=>{
+    const tile = document.createElement('div');
+    tile.className = 'state-tile' + (live.includes(st) ? ' live' : '');
+    tile.innerHTML = st + '<span class="tooltip">' + st + (live.includes(st) ? ' — Ready' : ' — Upcoming') + '</span>';
+    mosaic.appendChild(tile);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  revealEls.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
