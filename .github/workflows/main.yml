@@ -1,0 +1,93 @@
+name: Deploy NNU Tracker
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'councils.html'
+      - '.github/workflows/deploy-nnu-tracker.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set Variables
+      run: |
+        # PASTE YOUR GOOGLE FORM LINK HERE (used for all "Join Us" buttons)
+        echo "FORM_LINK=https://docs.google.com/forms/d/e/1FAIpQLSdU9V5ROS-GhfJl29Bbnl6-foJmgIAF7OHI1VSeLQOO_yqMNQ/viewform" >> $GITHUB_ENV
+
+        # ============================================
+        # UPDATE EACH COUNCIL'S BLOCK WHEN STATUS CHANGES
+        # STATUS options: "Seeking Coordinator" or "Active"
+        # CLASS options: "pending" or "active"
+        # If CLASS=active, leave BUTTON blank (no Join Us button needed)
+        # If CLASS=pending, BUTTON auto-generates a Join Us link
+        # ============================================
+
+        # BWARI
+        echo "BWARI_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "BWARI_CLASS=pending" >> $GITHUB_ENV
+        echo "BWARI_CONTACT=" >> $GITHUB_ENV
+
+        # KUJE
+        echo "KUJE_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "KUJE_CLASS=pending" >> $GITHUB_ENV
+        echo "KUJE_CONTACT=" >> $GITHUB_ENV
+
+        # AMAC
+        echo "AMAC_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "AMAC_CLASS=pending" >> $GITHUB_ENV
+        echo "AMAC_CONTACT=" >> $GITHUB_ENV
+
+        # GWAGWALADA
+        echo "GWAG_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "GWAG_CLASS=pending" >> $GITHUB_ENV
+        echo "GWAG_CONTACT=" >> $GITHUB_ENV
+
+        # KWALI
+        echo "KWALI_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "KWALI_CLASS=pending" >> $GITHUB_ENV
+        echo "KWALI_CONTACT=" >> $GITHUB_ENV
+
+        # ABAJI
+        echo "ABAJI_STATUS=Seeking Coordinator" >> $GITHUB_ENV
+        echo "ABAJI_CLASS=pending" >> $GITHUB_ENV
+        echo "ABAJI_CONTACT=" >> $GITHUB_ENV
+
+    - name: Build Join Us Buttons
+      run: |
+        # Auto-generate a Join Us button ONLY for pending councils; blank for active ones
+        for council in BWARI KUJE AMAC GWAG KWALI ABAJI; do
+          class_var="${council}_CLASS"
+          if [ "${!class_var}" = "active" ]; then
+            echo "${council}_BUTTON=" >> $GITHUB_ENV
+          else
+            echo "${council}_BUTTON=<a href='${FORM_LINK}' target='_blank' class='btn'>Join Us</a>" >> $GITHUB_ENV
+          fi
+        done
+
+    - name: Calculate Progress
+      run: |
+        ACTIVE=0
+        for council in BWARI KUJE AMAC GWAG KWALI ABAJI; do
+          class_var="${council}_CLASS"
+          if [ "${!class_var}" = "active" ]; then
+            ACTIVE=$((ACTIVE + 1))
+          fi
+        done
+        PERCENT=$((ACTIVE * 100 / 6))
+        echo "ACTIVE_COUNT=$ACTIVE" >> $GITHUB_ENV
+        echo "PROGRESS_PERCENT=$PERCENT" >> $GITHUB_ENV
+        if [ "$ACTIVE" -eq 6 ]; then
+          echo "PROGRESS_COMPLETE_CLASS=complete" >> $GITHUB_ENV
+        else
+          echo "PROGRESS_COMPLETE_CLASS=" >> $GITHUB_ENV
+        fi
+        echo "BUILD_DATE=$(date -u +"%d %B %Y, %H:%M UTC")" >> $GITHUB_ENV
+
+    - name: Generate Council Tracker Page
+      run: |
+        sed -i "s|{{BWARI_STATUS}}|${BWARI_STATUS}|g" councils.html
+        sed -i "s|{{BWA
